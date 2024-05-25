@@ -3,6 +3,7 @@ import cors from "cors";
 require("dotenv").config();
 import cookieParser from "cookie-parser";
 import errorMiddleware from "./middleware/error";
+import userRouter from "./routes/user.routes";
 
 const app = express();
 
@@ -10,16 +11,17 @@ const app = express();
 app.use(express.json({ limit: "58mb" }));
 // Error handling middleware should be the last middleware
 app.use(errorMiddleware);
-
 // Middleware for parsing cookies
 app.use(cookieParser());
-
 // Middleware for enabling CORS (Cross-Origin Resource Sharing)
 app.use(
   cors({
     origin: process.env.ORIGIN,
   })
 );
+
+//Routers
+app.use("/api/v1", userRouter);
 
 // Define the route for /test
 app.get("/test", (req: Request, res: Response, next: NextFunction) => {
