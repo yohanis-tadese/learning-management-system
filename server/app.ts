@@ -2,11 +2,14 @@ import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 require("dotenv").config();
 import cookieParser from "cookie-parser";
+import errorMiddleware from "./middleware/error";
 
 const app = express();
 
 // Middleware for parsing JSON with a specified limit
 app.use(express.json({ limit: "58mb" }));
+// Error handling middleware should be the last middleware
+app.use(errorMiddleware);
 
 // Middleware for parsing cookies
 app.use(cookieParser());
